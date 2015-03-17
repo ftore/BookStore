@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/META-INF/config/properties/globals.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- DataSource -->
+    <alias name="dataSource-${Globals.DbType}" alias="dataSource" />
+    
+    <!-- 
+    <bean id="dataSource-oracle" class="org.springframework.jndi.JndiObjectFactoryBean">  
+        <property name="jndiName" value="java:comp/env/jdbc/SMART_PORTAL" />  
+    </bean> 
+     -->
+    
+    <!-- mysql -->
+    <bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.DriverClassName}"/>
+        <property name="url" value="${Globals.Url}" />
+        <property name="username" value="${Globals.UserName}"/>
+        <property name="password" value="${Globals.Password}"/>
+    </bean>
+    
+    
+    <!-- mssql -->    
+    <bean id="dataSource-mssql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.DriverClassName}"/>
+        <property name="url" value="${Globals.Url}" />
+        <property name="username" value="${Globals.UserName}"/>
+        <property name="password" value="${Globals.Password}"/>
+    </bean>
+    
+    <!-- Oracle -->
+    <bean id="dataSource-oracle" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.DriverClassName}"/>
+        <property name="url" value="${Globals.Url}" />
+        <property name="username" value="${Globals.UserName}"/>
+        <property name="password" value="${Globals.Password}"/>
+        <property name="maxActive" value="30" />
+        <property name="initialSize" value="15" />
+        <property name="maxIdle" value="30" />
+        <property name="minIdle" value="10" />
+        <property name="testOnBorrow" value="false" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="timeBetweenEvictionRunsMillis" value="10000" />
+        <property name="testWhileIdle" value="true" />
+        <property name="numTestsPerEvictionRun" value="3" />
+        <property name="minEvictableIdleTimeMillis" value="-1" />
+    </bean>
+</beans>
